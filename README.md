@@ -6,10 +6,12 @@ We will create functions that easily complete the following tasks:
 
 Blain:
 Cleans/Merges csv files among laps
+
 Graph that looks at speed across GPS coordinates
 
 Fuyu:
 Graph of RPM vs Speed
+
 Graph that compares lap speed
 Graph that compares speed among driver
 
