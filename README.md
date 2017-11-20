@@ -1,6 +1,6 @@
 BLAIN MORIN, FUYU ZOU, JESS KAMINSKY
 
-For this project we will create an R package that manipulates the csv output from Racestudio2. These csv contain {BLAIN, WRITE WHAT IS IN THE FILES HERE}
+For this project we will create an R package that manipulates the csv output from Racestudio2. These csvs contain car race data from the Brown Formula Racing endurance laps (speed, throttle, acceleration, GPS position, oil pressure, braking, RPM, gear, etc). 
 
 We will create functions that easily complete the following tasks:
 
