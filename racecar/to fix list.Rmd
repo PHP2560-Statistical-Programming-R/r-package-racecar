@@ -1,0 +1,3 @@
+Things to fix:
+
+- should remove units from data (hard to declare variable names), move units to the package readme
