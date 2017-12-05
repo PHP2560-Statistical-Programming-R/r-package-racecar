@@ -25,6 +25,8 @@ Histograms with engine RPM
 Graphs of throttle position
 
 Graphs of braking pattern
+
+
 ----------- UPDATED 12/5/17: CHANGED PROJECT IDEA --------------------
 
 BLAIN MORIN, FUYU ZOU, JESS KAMINSKY
@@ -50,6 +52,7 @@ Chi-squared test
 Confidence Intervals 
 Create 2X2 Table 
 Simulate growth
+
 -------------------------------------------------------------------------------
 SHINY APP PROPOSAL
 
