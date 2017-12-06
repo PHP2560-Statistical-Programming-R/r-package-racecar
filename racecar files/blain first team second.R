@@ -1,13 +1,12 @@
 
 
-mapspeed <- function(data, laps, distance) {
-  
-  data <- data %>% filter(lap == laps)
-  
-  
-  
-  ggplot(data, aes( x = GPS_Latitude, y = GPS_Longitude)) + 
-    geom_point(aes(color = GPS_Speed)) + facet_wrap(aes(~lap))
+mapspeed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(data$Lap == laps) %>%
+    filter(startdist <= data$Distance) %>%
+    filter(enddist >= data$Distance) %>%
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) + 
+      geom_point(aes(color = GPS_Speed)) 
   
 }
 
