@@ -10,14 +10,14 @@ cleanSingleLap <- function(file, lapNum) {
   nameData <-  read_csv(file, skip = 12)
   nameData <- nameData[,-ncol(nameData)]
   
-  names <- nameData[1,]
-  units <- nameData[2,]
+#  names <- nameData[1,]
+#  units <- nameData[2,]
 
-  combined <- c()
-  for (i in 1:length(names)) {
-    combined[i] <- paste(names[i], "(", units[i], ")")
-  }  
-  names(lapData) <- combined
+#  combined <- c()
+#  for (i in 1:length(names)) {
+#    combined[i] <- paste(names[i], "(", units[i], ")")
+#  }  
+  names(lapData) <- nameData[1,]
   lapData$Lap <- lapNum
   return(lapData)
 }
