@@ -1,7 +1,7 @@
 \name{test}
 \alias{test}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
+\title{throttle position
 %%  ~~function to do ... ~~
 }
 \description{
