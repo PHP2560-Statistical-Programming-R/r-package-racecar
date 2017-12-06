@@ -11,4 +11,10 @@ mapspeed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
 }
 
 
-airfuel <- function (data, laps)
+airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist) %>%
+    filter(Distance <= enddist) %>%
+    ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+}

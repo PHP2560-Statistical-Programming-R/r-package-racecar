@@ -155,3 +155,25 @@ driver_speed <- function(data, drivers, lap){
     ylab("Longitude") +
     xlab("Latitude")
 }
+
+####################### Graph that compares speed at point around the track ###########################
+
+mapspeed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist) %>%
+    filter(Distance <= enddist) %>%
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) + 
+    geom_point(aes(color = GPS_Speed)) 
+  
+}
+
+############### Graph that plots air fuel ratio and rpm ###############################
+
+airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist) %>%
+    filter(Distance <= enddist) %>%
+    ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+}
