@@ -1,7 +1,7 @@
 \name{test}
 \alias{test}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
+\title{braking_pattern
 %%  ~~function to do ... ~~
 }
 \description{
