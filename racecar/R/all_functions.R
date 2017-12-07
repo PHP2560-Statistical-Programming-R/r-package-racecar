@@ -46,36 +46,36 @@ throttle_position <- function(data, laps, distance) {
 }
 
 ##########################Graph that compares lap speed#####################
-lapspeed <- function(data,lap, distance_start, distance_end){
+lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
   data %>%
-    filter(Lap == lap) %>%
-    filter(Distance_km >= distance_start & Distance_km <= distance_end) %>%
-    ggplot(aes(x = Distance_km, y = Lap)) +
-    geom_point(aes(color = GPS_Speed_mph), size = 3, pch = 15) +
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    ggplot(aes(x = Distance, y = Lap)) +
+    geom_point(aes(color = GPS_Speed), size = 3, pch = 15) +
     scale_colour_gradientn(colours=rainbow(4)) +
-    scale_y_continuous(breaks= c(1, seq(1,length(lap),1)))
+    scale_y_continuous(breaks= c(1, seq(1,length(laps),1)))
 }
 
 ################### graphs that compare RPM in different gears ######################
-RPM_speed <- function(data, lap){
+RPM_speed <- function(data, laps = 1){
   data %>%
-    filter(Lap == lap) %>%
-    mutate(gear_floor = floor(Calculated_Gea_)) %>%
+    filter(Lap == laps) %>%
+    mutate(gear_floor = floor(Calculated_Gea)) %>%
     group_by(gear_floor) %>%
     ggplot(aes(colour = PE3_TPS_)) + 
     scale_colour_gradientn(colours=rainbow(4))+
-    geom_point(aes(x = GPS_Speed_mph, y = PE3_RPM_rpm), size = 0.1)+
+    geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 0.1)+
     facet_wrap(~gear_floor)
 }
 
 ################### graphs that compare RPM and speed ######################
-### "gtable" method
-RPM_speed1 <- function(data, lap, distance_start, distance_end){
+### "gtable" method, lap argument can only be a number not vactor
+RPM_speed1 <- function(data, laps = 1, startdist = min(Data$Distance), enddist = max(Data$Distance)){
   p1 <- data %>%
-    filter(Lap == lap) %>%
-    filter(Distance_km >= distance_start & Distance_km <= distance_end) %>%
-    ggplot(aes(x = Distance_km)) +
-    geom_line(aes(y = GPS_Speed_mph), color = "#CC79A7", size = 0.8) +
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    ggplot(aes(x = Distance)) +
+    geom_line(aes(y = GPS_Speed), color = "#CC79A7", size = 0.8) +
     theme(panel.grid.minor = element_blank(), 
           panel.grid.major = element_line(color = "gray50", size = 0.5), 
           panel.grid.major.x =element_blank())+
@@ -93,10 +93,10 @@ RPM_speed1 <- function(data, lap, distance_start, distance_end){
     theme(plot.title = element_text(hjust = -0.16, vjust = 2.12, colour = "#CC79A7", size = 14))
   
   p2 <- data %>%
-    filter(Lap == lap) %>%
-    filter(Distance_km >= distance_start & Distance_km <= distance_end) %>%
-    ggplot(aes(x = Distance_km)) +
-    geom_line(aes(y = PE3_RPM_rpm), color = "#00A4E6", size = 0.8) +
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    ggplot(aes(x = Distance)) +
+    geom_line(aes(y = PE3_RPM), color = "#00A4E6", size = 0.8) +
     theme(panel.grid.minor = element_blank(), 
           panel.grid.major = element_line(color = "gray50", size = 0.5), 
           panel.grid.major.x =element_blank()) +
@@ -145,13 +145,14 @@ RPM_speed1 <- function(data, lap, distance_start, distance_end){
 }
 
 ##################Graph that compares speed among driver ###################
-driver_speed <- function(data, drivers, lap){
+driver_speed <- function(data, drivers, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
   data%>%
     filter(driver == drivers)%>%
-    group_by(Distance_km)%>%
-    sum(mean(GPS_Speed_mph))%>%
-    ggplot(aes(x = GPS_Latitude_, y = GPS_Longitude_)) +
-    geom_point(aes(color = GPS_Speed_mph)) +
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    group_by(Distance)%>%
+    sum(mean(GPS_Speed))%>%
+    ggplot(aes(x = GPS_Latitude, y = GPS_Longitude)) +
+    geom_point(aes(color = GPS_Speed)) +
     ylab("Longitude") +
     xlab("Latitude")
 }
