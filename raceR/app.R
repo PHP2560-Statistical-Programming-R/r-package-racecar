@@ -33,11 +33,12 @@ ui <- fluidPage(
 
 
 server <- function(input, output) {
+
   options(shiny.maxRequestSize = 50*1024^2)
   output$graph1 <- renderPlot( {
-    input_data <- cleanSingleLap(input$upload1)
+    input_data <- cleanSingleLap(input$upload1$datapath, 1)
 
-    lapspeed(input_data)
+    airfuel(input_data, 1)
   })
 }
 
