@@ -15,5 +15,4 @@ Imports:
   readr,
   gtable,
   grid,
-  gridExtra,
-  raceR
+  gridExtra
