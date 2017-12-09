@@ -57,7 +57,7 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
 }
 
 ################### graphs that compare RPM in different gears ######################
-RPM_speed <- function(data, laps = 1){
+RPM_gear <- function(data, laps = 1){
   data %>%
     filter(Lap == laps) %>%
     mutate(gear_floor = floor(Calculated_Gea)) %>%
@@ -70,7 +70,7 @@ RPM_speed <- function(data, laps = 1){
 
 ################### graphs that compare RPM and speed ######################
 ### "gtable" method, lap argument can only be a number not vactor
-RPM_speed1 <- function(data, laps = 1, startdist = min(Data$Distance), enddist = max(Data$Distance)){
+RPM_speed <- function(data, laps = 1, startdist = min(Data$Distance), enddist = max(Data$Distance)){
   p1 <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%

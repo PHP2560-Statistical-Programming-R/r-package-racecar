@@ -1,5 +1,5 @@
-\name{RPM_speed}
-\alias{RPM_speed}
+\name{RPM_speed1}
+\alias{RPM_speed1}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{RPM_speed
 %%  ~~function to do ... ~~
@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-RPM_speed(x)
+RPM_speed1(x)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

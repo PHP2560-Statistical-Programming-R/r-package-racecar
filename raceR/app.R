@@ -25,8 +25,8 @@ ui <- fluidPage(
            column(width = 4,
                   selectInput("graphtype2", label = h5("Choose Graph"),
                         choices = list("Braking Map" = "braking", "Throttle Position Map" = "throttle",
-                                        "Graph of Lap Speed" = "laps", "RPM by Gear" = "rpm_gear", 
-                                         "RPM by Speed" = "rpm_speed", "Map of Lap Speed" = "mapspeed", 
+                                        "Graph of Lap Speed" = "laps", "RPM by Gear" = "RPM_gear", 
+                                         "RPM by Speed" = "RPM_speed", "Map of Lap Speed" = "mapspeed", 
                                          "Air to Fuel Ratio vs RPM" = "airfuel"),
                                           selected = 1))),
 
@@ -61,7 +61,23 @@ server <- function(input, output) {
     } else if (input$graphtype2 %in% c("mapspeed")) {
       mapspeed(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
       
+    } else if (input$graphtype2 %in% c("RPM_speed")) {
+      RPM_speed(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype2 %in% c("RPM_gear")) {
+      RPM_gear(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype2 %in% c("throttle")) {
+      throttle_position(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+    
+    } else if (input$graphtype2 %in% c("braking")) {
+      breaking_pattern(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype2 %in% c("airfuel")) {
+      airfuel(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
     }
+    
 })
   }
 
