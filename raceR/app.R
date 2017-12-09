@@ -48,8 +48,24 @@ server <- function(input, output) {
     input_data <- cleanSingleLap(input$upload1$datapath, 1)
     if(input$graphtype1 %in% c("laps")) {
     lapspeed(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+    
     } else if (input$graphtype1 %in% c("mapspeed")) {
     mapspeed(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype1 %in% c("RPM_speed")) {
+      RPM_speed(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype1 %in% c("RPM_gear")) {
+      RPM_gear(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype1 %in% c("throttle")) {
+      throttle_position(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype1 %in% c("braking")) {
+      breaking_pattern(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
+      
+    } else if (input$graphtype2 %in% c("airfuel")) {
+      airfuel(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
       
     }
   })
