@@ -64,7 +64,7 @@ server <- function(input, output) {
     } else if (input$graphtype1 %in% c("braking")) {
       breaking_pattern(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
       
-    } else if (input$graphtype2 %in% c("airfuel")) {
+    } else if (input$graphtype1 %in% c("airfuel")) {
       airfuel(input_data, 1, startdist = input$distrange[1], enddist = input$distrange[2])
       
     }
