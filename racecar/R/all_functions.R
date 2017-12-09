@@ -61,7 +61,7 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
 }
 
 ################### graphs that compare RPM in different gears ######################
-RPM_gear <- function(data, laps = 1, startdist = min(Data$Distance), enddist = max(Data$Distance)){
+RPM_gear <- function(data, laps = 1, startdist = min(data$Distance), enddist = max(data$Distance)){
   data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist)%>%
@@ -75,78 +75,89 @@ RPM_gear <- function(data, laps = 1, startdist = min(Data$Distance), enddist = m
 
 ################### graphs that compare RPM and speed ######################
 ### "gtable" method, lap argument can only be a number not vactor
-RPM_speed <- function(data, laps = 1, startdist = min(Data$Distance), enddist = max(Data$Distance)){
+
+RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = max(data$Distance)){
   p1 <- data %>%
     filter(Lap == laps) %>%
-    filter(Distance >= startdist & Distance <= enddist) %>%
+    filter(Distance_km >= startdist & Distance_km <= enddist) %>%
     ggplot(aes(x = Distance)) +
-    geom_line(aes(y = GPS_Speed), color = "#CC79A7", size = 0.8) +
+    geom_line(aes(y = GPS_Speed), color = "#0033FF", size = 0.5) +
     theme(panel.grid.minor = element_blank(),
           panel.grid.major = element_line(color = "gray50", size = 0.5),
           panel.grid.major.x =element_blank())+
     theme(panel.background = element_blank())+
     scale_y_continuous(expand = c(0,0), limits = c(0, 100)) +
-    scale_x_continuous(breaks = c(0, seq(100,10000,100)))+
+    scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1)))+
     theme(axis.text.y = element_text(size = 10),
           axis.text.x = element_text(size = 10),
           axis.ticks = element_line(colour = 'gray50', size = 0.5),
-          axis.ticks.length = unit(.25, "mph"),
+          axis.ticks.length = unit(.25, "npc"),
           axis.ticks.x = element_line(colour = "black"),
           axis.ticks.y = element_blank())+
     ggtitle("GPS_Speed\n") +
     labs(x = NULL, y = NULL) +
-    theme(plot.title = element_text(hjust = -0.16, vjust = 2.12, colour = "#CC79A7", size = 14))
-
+    theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#0033FF", size = 12))
+  
   p2 <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance)) +
-    geom_line(aes(y = PE3_RPM), color = "#00A4E6", size = 0.8) +
+    geom_line(aes(y = PE3_RPM), color = "#FF3333", size = 0.5) +
+    ggtitle("RPM\n") +
     theme(panel.grid.minor = element_blank(),
-          panel.grid.major = element_line(color = "gray50", size = 0.5),
+          panel.grid.major = element_blank(),
           panel.grid.major.x =element_blank()) +
     theme(panel.background = element_blank()) +
-    scale_y_continuous(expand = c(0,0), limits = c(2000, 17000)) +
-    scale_x_continuous(breaks = c(0, seq(100,10000,100))) +
+    scale_y_continuous(expand = c(0,0), limits = c(0, 16000)) +
+    scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1))) +
     theme(axis.text.y = element_text(size = 10),
           axis.text.x = element_text(size = 10),
           axis.ticks = element_line(colour = 'gray50', size = 0.5),
           axis.ticks.length = unit(.25, "npc"),
           axis.ticks.x = element_line(colour = "black"),
           axis.ticks.y = element_blank()) +
-    ggtitle("RPM\n") +
     labs(x = NULL, y = NULL) +
-    theme(plot.title = element_text(hjust = -0.16, vjust = 2.12, colour = "#00A4E6", size = 14))
-
+    theme(plot.title = element_text(hjust = 0.85, vjust = 2.12, colour = "#FF3333", size = 12))
+  
   ## make gtable objects from ggplot objects
   ## gtable object shows how grobs are put together to form a ggplot
   g1 <- ggplot_gtable(ggplot_build(p1))
   g2 <- ggplot_gtable(ggplot_build(p2))
-
+  
   ## get the location of the panel of p1
   ## so that the panel os p2 is positioned correctly on top of it
   pp <- c(subset(g1$layout, name == "panel", se = t:r))
   print(pp)
   ## superimpose p2 (the panel) on p1
   grob_p2 <- as.list(g2$grobs[[which(g2$layout$name == "panel")]])
-
+  
   g <- gtable_add_grob(g1, grob_p2, pp$t, pp$l, pp$b, pp$l)
   print(g)
   ## extract the y-axis of p2
   ia <- which(g2$layout$name == "axis-l")
-
+  
   ga <- g2$grobs[[ia]]
   ax <- as.list(ga$children)[[2]]
-
+  
   ## flip it horizontally
   ax$widths <- rev(ax$widths)
   ax$grobs <- rev(ax$grobs)
-
+  
   ## add the flipped y-axis to the right
   g <- gtable_add_cols(g, g2$widths[g2$layout[ia, ]$l], length(g$widths) - 1)
   g <- gtable_add_grob(g, ax, pp$t, length(g$widths) - 1, pp$b)
-  plt <- grid.draw(g)
-  return(plt)
+  
+  ## change label text content
+  g$grobs[[16]]$children$GRID.text.3853$label <- c("GPS_Speed\n", "RPM\n")
+  
+  ## change color
+  g$grobs[[16]]$children$GRID.text.3853$gp$col <- c("#0033FF","#FF3333")
+  
+  ## change x-coordinate
+  g$grobs[[16]]$children$GRID.text.3853$x <- unit(c(-0.155, 0.9), "npc")
+  
+  return(grid.draw(g))
+  
 }
 
 ##################Graph that compares speed among driver ###################
