@@ -34,14 +34,18 @@ cleanMultiLap <- function(file_names) {
 }
 
 #######################braking_pattern Function#####################################
-braking_pattern <- function(data, laps, distance) {
-  ggplot(data, aes( x = GPS_Latitude, y = GPS_Longitude)) +
+braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
     geom_point(aes(color = BPS_Front))
 }
 
 #######################throttle_position Function#####################################
-throttle_position <- function(data, laps, distance) {
-  ggplot(data, aes( x = GPS_Latitude, y = GPS_Longitude)) +
+throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
     geom_point(aes(color = PE3_TPS))
 }
 
@@ -57,9 +61,10 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
 }
 
 ################### graphs that compare RPM in different gears ######################
-RPM_gear <- function(data, laps = 1){
+RPM_gear <- function(data, laps = 1, startdist = min(Data$Distance), enddist = max(Data$Distance)){
   data %>%
     filter(Lap == laps) %>%
+    filter(Distance >= startdist & Distance <= enddist)%>%
     mutate(gear_floor = floor(Calculated_Gea)) %>%
     group_by(gear_floor) %>%
     ggplot(aes(colour = PE3_TPS_)) +
@@ -145,9 +150,8 @@ RPM_speed <- function(data, laps = 1, startdist = min(Data$Distance), enddist = 
 }
 
 ##################Graph that compares speed among driver ###################
-driver_speed <- function(data, drivers, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
-  data%>%
-    filter(driver == drivers)%>%
+driver_speed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
+  data %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     group_by(Distance)%>%
     sum(mean(GPS_Speed))%>%
