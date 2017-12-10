@@ -1,6 +1,11 @@
 library(shiny)
 
 ui <- fluidPage(
+  
+  fluidRow(column(width = 6,
+                  tags$img(src = "logo.jpg")), 
+           column(width = 6,
+                  tags$h1("raceR"))),
 
   fluidRow(column(width = 6,
                   fileInput("upload1", label = h4("Upload .csv here"))),
