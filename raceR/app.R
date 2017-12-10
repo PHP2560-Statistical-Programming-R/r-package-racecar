@@ -2,9 +2,9 @@ library(shiny)
 
 ui <- fluidPage(
   
-  fluidRow(column(width = 6,
+  fluidRow(column(width = 4,
                   tags$img(src = "logo.jpg")), 
-           column(width = 6,
+           column(width = 6, 
                   tags$h1("raceR"))),
 
   fluidRow(column(width = 6,
