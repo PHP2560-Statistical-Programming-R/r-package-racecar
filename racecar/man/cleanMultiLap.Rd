@@ -18,7 +18,7 @@ cleanMultiLap(c("laponedata.csv"", "laptwodata.csv"))
 The file names included in the file_names vector should be listed in sequential order by lap number. The lap number column will correspond to the position of the .csv file in the file_names vector. For example, in cleanMultiLap(c(laponedata.csv, laptwodata.csv)), the data in laponedata.csv will have Lap = 1 for all observations. The data from laptwodata.csv will have Lap = 2
 }
 \value{
-A dataframe with data from racestudio2 that has been cleaned. A column for lap number has also been included.
+A tibble with data from racestudio2 that has been cleaned. A column for lap number has also been included.
 }
 
 \references{
