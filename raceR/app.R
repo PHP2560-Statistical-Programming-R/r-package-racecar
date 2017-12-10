@@ -1,11 +1,13 @@
 library(shiny)
 
-ui <- fluidPage(
+###requires install.packages("shinythemes")
+
+ui <- fluidPage(theme = shinytheme("darkly"),
   
   fluidRow(column(width = 4,
                   tags$img(src = "logo.jpg")), 
            column(width = 6, 
-                  tags$h1("raceR"))),
+                  tags$h1("raceR", style = "color:red;"))),
 
   fluidRow(column(width = 6,
                   fileInput("upload1", label = h4("Upload .csv here"))),
