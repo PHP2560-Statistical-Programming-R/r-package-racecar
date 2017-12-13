@@ -79,11 +79,11 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance, y = Lap)) +
-    geom_point(aes(color = GPS_Speed), size = 3, pch = 15) +
+    geom_point(aes(color = GPS_Speed), size = 5, pch = 15) +
     scale_colour_gradientn(colours=rainbow(4)) +
     scale_y_continuous(breaks= c(1, seq(1,length(laps),1)))+
     ## change the theme color
-    theme(panel.background = element_blank()) +
+    theme(panel.background = element_rect(fill = 'black', colour = 'black')) +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.background = element_rect(fill = 'black', colour = 'black'))
