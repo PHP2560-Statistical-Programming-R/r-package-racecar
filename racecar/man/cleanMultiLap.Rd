@@ -7,7 +7,7 @@
 Returns a dataframe containing data collected from multiple laps
 }
 \usage{
-cleanMultiLap(c("laponedata.csv"", "laptwodata.csv"))
+cleanMultiLap(c("laponedata.csv", "laptwodata.csv"))
 }
 
 \arguments{
