@@ -1,5 +1,13 @@
-BLAIN MORIN, FUYU ZOU, JESS KAMINSKY
+Use of package:
 
+Creation process:
+
+Individual roles:
+- Blain:
+- Fuyu:
+- Jess:
+-----------------------------------------------------------------------------------------------------------------------
+R Package Proposal: 
 For this project we will create an R package that manipulates the csv output from Racestudio2. These csvs contain car race data from the Brown Formula Racing endurance laps (speed, throttle, acceleration, GPS position, oil pressure, braking, RPM, gear, etc). 
 
 We will create functions that easily complete the following tasks:
@@ -25,5 +33,5 @@ Histograms with engine RPM
 Graphs of throttle position
 
 Graphs of braking pattern
---------------------------------------------------------------------------------------------------------------
-SHINY APP PROPOSAL
+
+------------------------------------------------------------------------------------------------------------------------
