@@ -1,7 +1,7 @@
 Use of package:
-
+(Blain)
 Creation process:
-
+(Jess)
 Individual roles:
 - Blain:
 - Fuyu:
