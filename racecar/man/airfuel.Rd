@@ -1,57 +1,45 @@
 \name{airfuel}
 \alias{airfuel}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{airfuel
-%%  ~~function to do ... ~~
+
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Creates a scatter plot with air fuel ratio vs rpm. Also includes a linnear regression line. 
 }
 \usage{
-airfuel(x)
+airfuel(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance))
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{data}{a dataframe that has been output from cleanSingleLap or cleanMultiLap}
+  \item{laps}{the number of laps that you would like to look at}
+  \item{startdist}{the inital position of the track that you would like to look at   plots for, the default is the beginning of the          track}
+  \item{enddist}{the ending position of the track the you would like to look at plots for, the default is the ending of the track}
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A scatter plot is created.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
+Blain Morin
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x) 
-{
-  }
+airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist) %>%
+    filter(Distance <= enddist) %>%
+    ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ air }
+\keyword{ fuel }
+\keyword{ rpm }
