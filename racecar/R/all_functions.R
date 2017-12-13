@@ -208,3 +208,15 @@ airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = m
     filter(Distance <= enddist) %>%
     ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
 }
+
+
+############# Graph that plots oil pressure around track ##############################
+
+oilpressure <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
+  data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist) %>%
+    filter(Distance <= enddist) %>%
+    rename(oilpress = "Oil Pressure_Cal") %>%
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) + geom_point(aes(color = oilpress))
+}
