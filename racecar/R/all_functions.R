@@ -94,7 +94,7 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance), enddist = m
 RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = max(data$Distance)){
   p1 <- data %>%
     filter(Lap == laps) %>%
-    filter(Distance_km >= startdist & Distance_km <= enddist) %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance)) +
     geom_line(aes(y = GPS_Speed), color = "#0033FF", size = 0.5) +
     theme(panel.grid.minor = element_blank(),
