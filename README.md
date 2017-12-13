@@ -1,12 +1,3 @@
-Use of package:
-
-Creation process:
-
-Individual roles:
-- Blain:
-- Fuyu:
-- Jess:
------------------------------------------------------------------------------------------------------------------------
 R Package Proposal: 
 For this project we will create an R package that manipulates the csv output from Racestudio2. These csvs contain car race data from the Brown Formula Racing endurance laps (speed, throttle, acceleration, GPS position, oil pressure, braking, RPM, gear, etc). 
 

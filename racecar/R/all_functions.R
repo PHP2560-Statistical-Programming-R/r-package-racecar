@@ -1,3 +1,4 @@
+
 #######################cleanSingleLap Function#####################################
 cleanSingleLap <- function(file, lapNum = 1) {
   ### read data into R
