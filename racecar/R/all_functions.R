@@ -54,10 +54,10 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
     geom_point(aes(color = BPS_Front)) +
     
     ## change the theme color
-    theme(panel.backgroud = theme_rect(fill = "black"),
-            panel.grid.major = element_blank,
-            panel.grid.minor = element_blank,
-            plot.background = theme_rect(color = "black"))
+    theme(panel.background = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.background = element_blank())
 }
 
 #######################throttle_position Function#####################################
@@ -83,10 +83,10 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
     scale_colour_gradientn(colours=rainbow(4)) +
     scale_y_continuous(breaks= c(1, seq(1,length(laps),1)))+
     ## change the theme color
-    theme(panel.backgroud = element_blank,
-            panel.grid.major = element_blank,
-            panel.grid.minor = element_blank,
-            plot.background = theme_rect(color = "black"))
+    theme(panel.background = element_blank()) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = 'black', colour = 'black'))
 }
 
 ################### graphs that compare RPM in different gears ######################
