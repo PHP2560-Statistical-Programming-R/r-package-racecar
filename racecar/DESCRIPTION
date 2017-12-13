@@ -1,8 +1,8 @@
-Package: raceR
+Package: racecar
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Mainpulate data and plot graphs based on output from racestudio2
 Version: 0.1.0
-Author: Who wrote it
+Author: Blain Morin, Fuyu Zou, Jess Kaminsky
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
