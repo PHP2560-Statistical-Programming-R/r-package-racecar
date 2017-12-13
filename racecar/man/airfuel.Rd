@@ -5,7 +5,7 @@
 
 }
 \description{
-Creates a scatter plot with air fuel ratio vs rpm. Also includes a linnear regression line. 
+Creates a scatter plot with air fuel ratio vs rpm. Also includes a linear regression line. 
 }
 \usage{
 airfuel(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance))
