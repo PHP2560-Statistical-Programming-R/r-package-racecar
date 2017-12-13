@@ -195,7 +195,7 @@ mapspeed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
     filter(Distance >= startdist) %>%
     filter(Distance <= enddist) %>%
     ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
-    geom_point(aes(color = GPS_Speed))
+    geom_point(aes(color = GPS_Speed)) 
 
 }
 
@@ -206,7 +206,7 @@ airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = m
     filter(Lap == laps) %>%
     filter(Distance >= startdist) %>%
     filter(Distance <= enddist) %>%
-    ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+    ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + geom_point() + geom_smooth(method = "lm", se = FALSE) 
 }
 
 
@@ -218,5 +218,5 @@ oilpressure <- function(data, laps = 1, startdist = min(data$Distance) , enddist
     filter(Distance >= startdist) %>%
     filter(Distance <= enddist) %>%
     rename(oilpress = "Oil Pressure_Cal") %>%
-    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) + geom_point(aes(color = oilpress))
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) + geom_point(aes(color = oilpress)) 
 }
