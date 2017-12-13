@@ -1,15 +1,15 @@
-\name{lapspeed}
-\alias{lapspeed}
+\name{RPM_gear}
+\alias{RPM_gear}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{ plot the speed of each lap and compare speed of multiple laps if there is moer than one laps.
+\title{ This function draws a plot that shows what speeds different gear ratios allow for.
 %%  ~~function to do ... ~~
 }
-\description{ This function will create a heat style line based on the speed throughout the lap. If the lap argument length is greater than 1, there will be one line generated for each lap in one graph.
+\description{The plots present this information in a X-Y plot of RPM versus speed. Different colors represent varying amounts of throttle position and color vary from red at 0 precent to purple at 100 percent. And one plot is generated for each gear.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-lapspeed(data, laps, startdist, enddist)
-lapspeed(data, 1, 0, 3.5)
+RPM_gear(data, laps, startdist, enddist)
+RPM_gear(data, 1, 0, 3.5)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,7 +22,7 @@ lapspeed(data, 1, 0, 3.5)
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-A plot that shows speed change in one or more laps is drawed.
+A plot that shows what speeds different gear ratios allow for is generated.
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -32,7 +32,7 @@ A plot that shows speed change in one or more laps is drawed.
 \references{
 %% ~put references to the literature/web site here ~
 }
-\author{ Fuyu Zou
+\author{Fuyu Zou
 %%  ~~who you are~~
 }
 \note{
@@ -51,18 +51,19 @@ A plot that shows speed change in one or more laps is drawed.
 
 ## The function is currently defined as
 function (data, laps, startdist, enddist) 
-{  data %>%
+{data %>%
     filter(Lap == laps) %>%
-    filter(Distance >= startdist & Distance <= enddist) %>%
-    ggplot(aes(x = Distance, y = Lap)) +
-    geom_point(aes(color = GPS_Speed), size = 3, pch = 15) +
-    scale_colour_gradientn(colours=rainbow(4)) +
-    scale_y_continuous(breaks= c(1, seq(1,length(laps),1)))
+    filter(Distance >= startdist & Distance <= enddist)%>%
+    mutate(gear_floor = floor(Calculated_Gea)) %>%
+    group_by(gear_floor) %>%
+    ggplot(aes(colour = PE3_TPS_)) +
+    scale_colour_gradientn(colours=rainbow(4))+
+    geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 0.1)+
+    facet_wrap(~gear_floor)
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ speed }
-\keyword{ lap }
-\keyword{ distance }
-\keyword{ graph }
+\keyword{ RPM }
+\keyword{ speed }% __ONLY ONE__ keyword per line
+\keyword{ gear }
