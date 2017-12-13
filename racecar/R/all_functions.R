@@ -1,6 +1,8 @@
+
 #######################cleanSingleLap Function#####################################
 cleanSingleLap <- function(file, lapNum = 1) {
   ### read data into R
+  options(warn=-1)
   lapData <- read_csv(file, skip = 15)
 
   ### This command gets rid of the extra column
@@ -23,6 +25,7 @@ cleanSingleLap <- function(file, lapNum = 1) {
 ##files must be in sequential order
 
 cleanMultiLap <- function(file_names) {
+  options(warn=-1)
   ## create an empty tibble that will be used to merge all lap data
   all_laps <- tibble()
   
@@ -181,4 +184,16 @@ airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = m
     filter(Distance >= startdist) %>%
     filter(Distance <= enddist) %>%
     ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+}
+
+
+############# Graph that plots oil pressure around track ##############################
+
+oilpressure <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
+  data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist) %>%
+    filter(Distance <= enddist) %>%
+    rename(oilpress = "Oil Pressure_Cal") %>%
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) + geom_point(aes(color = oilpress))
 }
