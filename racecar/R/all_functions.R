@@ -1,6 +1,8 @@
+
 #######################cleanSingleLap Function#####################################
 cleanSingleLap <- function(file, lapNum = 1) {
   ### read data into R
+  options(warn=-1)
   lapData <- read_csv(file, skip = 15)
 
   ### This command gets rid of the extra column
@@ -23,6 +25,7 @@ cleanSingleLap <- function(file, lapNum = 1) {
 ##files must be in sequential order
 
 cleanMultiLap <- function(file_names) {
+  options(warn=-1)
   ## create an empty tibble that will be used to merge all lap data
   all_laps <- tibble()
   
@@ -48,7 +51,13 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
     ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
     
     ##add color based on value of BPS_front - indicating the brake pressure
-    geom_point(aes(color = BPS_Front))
+    geom_point(aes(color = BPS_Front)) +
+    
+    ## change the theme color
+    theme(panel.backgroud = theme_rect(fill = "black") +
+            panel.grid.major = element_blank +
+            panel.grid.minor = element_blank +
+            plot.background = theme_rect(color = "black"))
 }
 
 #######################throttle_position Function#####################################
@@ -72,7 +81,12 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
     ggplot(aes(x = Distance, y = Lap)) +
     geom_point(aes(color = GPS_Speed), size = 3, pch = 15) +
     scale_colour_gradientn(colours=rainbow(4)) +
-    scale_y_continuous(breaks= c(1, seq(1,length(laps),1)))
+    scale_y_continuous(breaks= c(1, seq(1,length(laps),1)))+
+    ## change the theme color
+    theme(panel.backgroud = element_blank() +
+            panel.grid.major = element_blank +
+            panel.grid.minor = element_blank +
+            plot.background = theme_rect(color = "black"))
 }
 
 ################### graphs that compare RPM in different gears ######################
@@ -82,7 +96,7 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance), enddist = m
     filter(Distance >= startdist & Distance <= enddist)%>%
     mutate(gear_floor = floor(Calculated_Gea)) %>%
     group_by(gear_floor) %>%
-    ggplot(aes(colour = PE3_TPS_)) +
+    ggplot(aes(colour = PE3_TPS)) +
     scale_colour_gradientn(colours=rainbow(4))+
     geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 0.1)+
     facet_wrap(~gear_floor)
@@ -94,7 +108,7 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance), enddist = m
 RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = max(data$Distance)){
   p1 <- data %>%
     filter(Lap == laps) %>%
-    filter(Distance_km >= startdist & Distance_km <= enddist) %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance)) +
     geom_line(aes(y = GPS_Speed), color = "#0033FF", size = 0.5) +
     theme(panel.grid.minor = element_blank(),
@@ -112,7 +126,7 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
     ggtitle("GPS_Speed\n") +
     labs(x = NULL, y = NULL) +
     theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#0033FF", size = 12))
-  
+
   p2 <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
@@ -133,45 +147,8 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
           axis.ticks.y = element_blank()) +
     labs(x = NULL, y = NULL) +
     theme(plot.title = element_text(hjust = 0.85, vjust = 2.12, colour = "#FF3333", size = 12))
-  
-  ## make gtable objects from ggplot objects
-  ## gtable object shows how grobs are put together to form a ggplot
-  g1 <- ggplot_gtable(ggplot_build(p1))
-  g2 <- ggplot_gtable(ggplot_build(p2))
-  
-  ## get the location of the panel of p1
-  ## so that the panel os p2 is positioned correctly on top of it
-  pp <- c(subset(g1$layout, name == "panel", se = t:r))
-  print(pp)
-  ## superimpose p2 (the panel) on p1
-  grob_p2 <- as.list(g2$grobs[[which(g2$layout$name == "panel")]])
-  
-  g <- gtable_add_grob(g1, grob_p2, pp$t, pp$l, pp$b, pp$l)
-  print(g)
-  ## extract the y-axis of p2
-  ia <- which(g2$layout$name == "axis-l")
-  
-  ga <- g2$grobs[[ia]]
-  ax <- as.list(ga$children)[[2]]
-  
-  ## flip it horizontally
-  ax$widths <- rev(ax$widths)
-  ax$grobs <- rev(ax$grobs)
-  
-  ## add the flipped y-axis to the right
-  g <- gtable_add_cols(g, g2$widths[g2$layout[ia, ]$l], length(g$widths) - 1)
-  g <- gtable_add_grob(g, ax, pp$t, length(g$widths) - 1, pp$b)
-  
-  ## change label text content
-  g$grobs[[16]]$children$GRID.text.3853$label <- c("GPS_Speed\n", "RPM\n")
-  
-  ## change color
-  g$grobs[[16]]$children$GRID.text.3853$gp$col <- c("#0033FF","#FF3333")
-  
-  ## change x-coordinate
-  g$grobs[[16]]$children$GRID.text.3853$x <- unit(c(-0.155, 0.9), "npc")
-  
-  return(grid.draw(g))
+
+  grid.arrange(p1,p2)
   
 }
 
