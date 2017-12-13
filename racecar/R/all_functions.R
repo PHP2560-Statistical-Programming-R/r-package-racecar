@@ -1,6 +1,7 @@
 #######################cleanSingleLap Function#####################################
 cleanSingleLap <- function(file, lapNum = 1) {
   ### read data into R
+  options(warn=-1)
   lapData <- read_csv(file, skip = 15)
 
   ### This command gets rid of the extra column
@@ -23,6 +24,7 @@ cleanSingleLap <- function(file, lapNum = 1) {
 ##files must be in sequential order
 
 cleanMultiLap <- function(file_names) {
+  options(warn=-1)
   ## create an empty tibble that will be used to merge all lap data
   all_laps <- tibble()
   
