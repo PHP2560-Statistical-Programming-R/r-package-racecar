@@ -204,11 +204,7 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
           axis.ticks.y = element_blank())+
     ggtitle("GPS_Speed\n") +
     labs(x = NULL, y = NULL) +
-    theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#FFFF33", size = 12)) +
-    facet_wrap(~Lap) +
-    ## change the strip color
-    theme(strip.background = element_rect(fill = "#333333", color = "red"),
-          strip.text = element_text(color = "red"))
+    theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#FFFF33", size = 12))
   
   p2 <- data %>%
     filter(Lap == laps) %>%
@@ -233,11 +229,7 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
           axis.ticks.length = unit(.25, "npc"),
           axis.ticks.x = element_line(colour = "red"),
           axis.ticks.y = element_blank()) +
-    labs(x = NULL, y = NULL) +
-    facet_wrap(~Lap) +
-    ## change the strip color
-    theme(strip.background = element_rect(fill = "#333333", color = "red"),
-          strip.text = element_text(color = "red"))
+    labs(x = NULL, y = NULL) 
   
   grid.arrange(p1,p2)
 }
