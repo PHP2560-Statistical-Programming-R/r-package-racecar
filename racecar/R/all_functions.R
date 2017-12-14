@@ -83,7 +83,11 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
 #######################throttle_position Function#####################################
 throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%
+<<<<<<< HEAD
     filter(Lap %in% laps) %>%
+=======
+    filter(Laps %in% laps) %>%
+>>>>>>> 02e522a45f40c68c3c9ff8fcfca95997197b25db
     ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
     
