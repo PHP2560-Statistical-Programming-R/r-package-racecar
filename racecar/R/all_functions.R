@@ -44,11 +44,14 @@ cleanMultiLap <- function(file_names) {
 #######################braking_pattern Function#####################################
 braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%
+    filter(Lap %in% laps) %>%
     ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
     
     ## plot the map of the track
     ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
+    
+    facet_wrap(~Lap) +
     
     ##add color based on value of BPS_front - indicating the brake pressure
     geom_point(aes(color = BPS_Front), size = 3) +
@@ -80,11 +83,14 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
 #######################throttle_position Function#####################################
 throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%
+    filter(Laps %in% laps) %>%
     ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
     
     ## plot the map of the track
     ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
+    
+    facet_wrap(~Lap) +
     
     ##add color based on value of PE3_TPS - indicating the throttle position
     geom_point(aes(color = PE3_TPS), size = 3) +
