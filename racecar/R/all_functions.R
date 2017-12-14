@@ -140,10 +140,10 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
 }
 
 ################### graphs that compare RPM in different gears ######################
-RPM_gear <- function(data, laps = 1, startdist = min(data$Distance), enddist = max(data$Distance)){
+RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
   data %>%
     filter(Lap == laps) %>%
-    filter(Distance >= startdist & Distance <= enddist)%>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
     mutate(gear_floor = floor(Calculated_Gea)) %>%
     group_by(gear_floor) %>%
     ggplot(aes(colour = PE3_TPS)) +
