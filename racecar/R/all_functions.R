@@ -237,6 +237,39 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
   
 }
 
+################### graphs that compare RPM at point around the track ######################
+maprpm <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
+  data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist) %>%
+    filter(Distance <= enddist) %>%
+    ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
+    geom_point(aes(color = PE3_RPM), size = 3) + facet_wrap(~Lap) +
+    
+    ## change color scale
+    scale_colour_gradientn(colours = heat.colors(4))+
+    
+    ## change the theme color
+    theme(plot.background = element_rect(fill = 'black', colour = 'red'),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = 'black', colour = 'red')) +
+    ## change axises color
+    theme(axis.text.y = element_text(size = 10, colour = 'red'),
+          axis.text.x = element_text(size = 10, colour = 'red'),
+          axis.line = element_line(colour = "red"),
+          axis.ticks = element_line(colour = "red", size = 0.5)) +
+    ## change legend color and position
+    theme(legend.background = element_rect(fill = "black", color = "black"),
+          legend.text = element_text(color = "red"),
+          legend.title = element_text(color = "red"),
+          legend.position = "top") +
+    labs(x = NULL, y = NULL) +
+    ## change the strip color
+    theme(strip.background = element_rect(fill = "#333333", color = "red"),
+          strip.text = element_text(color = "red"))
+  
+}
 
 ####################### Graph that compares speed at point around the track ###########################
 
