@@ -1,4 +1,4 @@
-
+library(dplyr)
 #######################cleanSingleLap Function#####################################
 cleanSingleLap <- function(file, lapNum = 1) {
   ### read data into R
@@ -84,7 +84,7 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
 throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%
 
-    filter(Laps %in% laps) %>%
+    filter(Lap %in% laps) %>%
 
     ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
@@ -148,10 +148,25 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
   ggplotly(p)
 }
 
-lapspeed(lap1)
+
 
 ################### graphs that compare RPM in different gears ######################
 RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
+  data <- data %>%
+    mutate(gear_floor = floor(Calculated_Gea))
+  
+  
+  speed2 <- data$GPS_Speed[data$gear_floor == 2]
+  speed3 <- data$GPS_Speed[data$gear_floor == 3]
+  speed4 <- data$GPS_Speed[data$gear_floor == 4]
+  speed5 <- data$GPS_Speed[data$gear_floor == 5]
+  speed6 <- data$GPS_Speed[data$gear_floor == 6]
+  rpm2 <- data$PE3_RPM[data$gear_floor == 2]
+  rpm3 <- data$PE3_RPM[data$gear_floor == 3]
+  rpm4 <- data$PE3_RPM[data$gear_floor == 4]
+  rpm5 <- data$PE3_RPM[data$gear_floor == 5]
+  rpm6 <- data$PE3_RPM[data$gear_floor == 6]
+  
   p <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
@@ -160,6 +175,7 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
     ggplot(aes(colour = PE3_TPS)) +
     scale_colour_gradientn(colours=rainbow(4))+
     geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 1)+
+    
     facet_wrap(~gear_floor, scales = "free_y", ncol = 2) +
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
