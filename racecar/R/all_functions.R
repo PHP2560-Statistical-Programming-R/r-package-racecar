@@ -125,30 +125,21 @@ throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , e
 lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
   p <- data %>%
     filter(Lap %in% laps) %>%
-    
-    ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
-    
-    ## plot the speed change of each lap
     ggplot(aes(x = Distance, y = Lap)) +
     geom_point(aes(color = GPS_Speed), size = 8, pch = 15) +
-    
-    ## change the color of point
     scale_colour_gradientn(colours=heat.colors(4)) +
-    
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.background = element_rect(fill = 'black', colour = 'red')) +
-    
     ## change axises color
     scale_y_continuous(breaks= c(1, seq(1,length(laps),1))) +
     theme(axis.text.y = element_text(size = 10, colour = 'red'),
           axis.text.x = element_text(size = 10, colour = 'red'),
           axis.line = element_line(colour = "red"),
           axis.ticks = element_line(colour = "red", size = 0.5)) +
-    
     ## change legend color and position
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
@@ -161,40 +152,15 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
 
 ################### graphs that compare RPM in different gears ######################
 RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
-  data <- data %>%
-    mutate(gear_floor = floor(Calculated_Gea))
-  
-  
-  speed2 <- data$GPS_Speed[data$gear_floor == 2]
-  speed3 <- data$GPS_Speed[data$gear_floor == 3]
-  speed4 <- data$GPS_Speed[data$gear_floor == 4]
-  speed5 <- data$GPS_Speed[data$gear_floor == 5]
-  speed6 <- data$GPS_Speed[data$gear_floor == 6]
-  rpm2 <- data$PE3_RPM[data$gear_floor == 2]
-  rpm3 <- data$PE3_RPM[data$gear_floor == 3]
-  rpm4 <- data$PE3_RPM[data$gear_floor == 4]
-  rpm5 <- data$PE3_RPM[data$gear_floor == 5]
-  rpm6 <- data$PE3_RPM[data$gear_floor == 6]
-  
   p <- data %>%
     filter(Lap == laps) %>%
-    
-    ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
-    
-    ## floor the gear into integer in order to group
     mutate(gear_floor = floor(Calculated_Gea)) %>%
     group_by(gear_floor) %>%
-    
-    ##plot the speed versus distance graph, and facet wrap by gear
     ggplot(aes(colour = PE3_TPS)) +
-    geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 1)+
-    
-    facet_wrap(~gear_floor, scales = "free_y", ncol = 2) +
-    
-    ## change the color of point
     scale_colour_gradientn(colours=rainbow(4))+
-    
+    geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 1)+
+    facet_wrap(~gear_floor, scales = "free_y", ncol = 2) +
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
@@ -222,24 +188,18 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
 RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = max(data$Distance)){
   p1 <- data %>%
     filter(Lap == laps) %>%
-    
-     ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
-    
-     ## plot speed versus distance
     ggplot(aes(x = Distance)) +
     geom_line(aes(y = GPS_Speed), color = "#FFFF33", size = 1) +
-   
-     ## change plot backgroud color
+    ## change plot backgroud color
     theme(plot.background = element_rect(fill = "black", color = "black"))+
-     
-     ## change panel color
+    ## change panel color
     theme(panel.grid.minor = element_blank(),
           panel.grid.major = element_line(color = "red", size = 0.1),
           panel.grid.major.x =element_blank(),
           panel.background = element_rect(fill = "black", color = "red"))+
     scale_y_continuous(expand = c(0,0), limits = c(0, 100)) +
-    ##scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1)))+
+    #scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1)))+
     theme(axis.text.y = element_text(color = "red", size = 10),
           axis.text.x = element_text(color = "red", size = 10),
           axis.ticks = element_line(colour = 'red', size = 0.5),
@@ -251,24 +211,19 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
   p2 <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
-    
-    ## plot RPM versus distance
     ggplot(aes(x = Distance)) +
     geom_line(aes(y = PE3_RPM), color = "#99FFFF", size = 1) +
     
     ## change plot backgroud color
     theme(plot.background = element_rect(fill = "black", color = "black"))+
-    
     ## change panel color
     theme(panel.grid.minor = element_blank(),
           panel.grid.major = element_line(color = "red", size = 0.1),
           panel.grid.major.x =element_blank(),
           panel.background = element_rect(fill = "black", color = "red"))+
-    
     ## change axises
     scale_y_continuous(expand = c(0,0), limits = c(0, 16000)) +
-   
-    ##scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1))) +
+    #scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1))) +
     theme(axis.text.y = element_text(color = "red", size = 10),
           axis.text.x = element_text(color = "red", size = 10),
           axis.ticks = element_line(colour = 'red', size = 0.5),
@@ -277,7 +232,6 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
           axis.ticks.y = element_blank()) +
     labs(x = NULL, y = NULL) 
   
-  ## merge the two graphs
   subplot(p1,plotly_empty(),p2, shareX = TRUE, nrows = 2 )%>% 
     layout(margin = list(l = 100))
   
