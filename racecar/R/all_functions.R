@@ -83,11 +83,9 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
 #######################throttle_position Function#####################################
 throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%
-<<<<<<< HEAD
-    filter(Lap %in% laps) %>%
-=======
+
     filter(Laps %in% laps) %>%
->>>>>>> 02e522a45f40c68c3c9ff8fcfca95997197b25db
+
     ## only look at data that is within the users specified start and end distance
     filter(Distance >= startdist & Distance <= enddist) %>%
     
@@ -125,12 +123,12 @@ throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , e
 
 ##########################Graph that compares lap speed#####################
 lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
-  data %>%
+  p <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance, y = Lap)) +
     geom_point(aes(color = GPS_Speed), size = 8, pch = 15) +
-    scale_colour_gradientn(colours=rainbow(4)) +
+    scale_colour_gradientn(colours=heat.colors(4)) +
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
@@ -147,7 +145,10 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
           legend.position = "top")
+  ggplotly(p)
 }
+
+lapspeed(lap1)
 
 ################### graphs that compare RPM in different gears ######################
 RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
@@ -233,20 +234,9 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
     labs(x = NULL, y = NULL) 
   
   grid.arrange(p1,p2)
+
 }
 
-##################Graph that compares speed among driver ###################
-## TBD
-driver_speed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
-  data %>%
-    filter(Distance >= startdist & Distance <= enddist) %>%
-    group_by(Distance)%>%
-    sum(mean(GPS_Speed))%>%
-    ggplot(aes(x = GPS_Latitude, y = GPS_Longitude)) +
-    geom_point(aes(color = GPS_Speed)) +
-    ylab("Longitude") +
-    xlab("Latitude")
-}
 
 ####################### Graph that compares speed at point around the track ###########################
 
