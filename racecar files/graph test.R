@@ -2,7 +2,7 @@
 library(gridExtra)
 library(dplyr)
 library(ggplot2)
-
+library(racecar)
 library(plotly)
 library(readr)
 file1 <- normalizePath("~/Documents/coursework/R programming/r-package-racecar/racecar files/samplelap2.csv")
@@ -130,7 +130,7 @@ RPM_speed(lap1)
 
 ## lapspeed
 lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
-  data %>%
+  p <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance, y = Lap)) +
@@ -152,6 +152,7 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
           legend.position = "top")
+  plotly(p)
 }
 
 lapspeed(lap1)
