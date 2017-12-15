@@ -125,7 +125,59 @@ throttle_position(lap1)
 
 ## RPM_speed
 library(gridExtra)
-
+RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = max(data$Distance)){
+  p1 <- data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    ggplot(aes(x = Distance)) +
+    geom_line(aes(y = GPS_Speed), color = "#FFFF33", size = 1) +
+    ## change plot backgroud color
+    theme(plot.background = element_rect(fill = "black", color = "black"))+
+    ## change panel color
+    theme(panel.grid.minor = element_blank(),
+          panel.grid.major = element_line(color = "red", size = 0.1),
+          panel.grid.major.x =element_blank(),
+          panel.background = element_rect(fill = "black", color = "red"))+
+    scale_y_continuous(expand = c(0,0), limits = c(0, 100)) +
+    scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1)))+
+    theme(axis.text.y = element_text(color = "red", size = 10),
+          axis.text.x = element_text(color = "red", size = 10),
+          axis.ticks = element_line(colour = 'red', size = 0.5),
+          axis.ticks.length = unit(.25, "npc"),
+          axis.ticks.x = element_line(colour = "red"),
+          axis.ticks.y = element_blank())+
+    ggtitle("GPS_Speed\n") +
+    labs(x = NULL, y = NULL) +
+    theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#FFFF33", size = 12))
+  
+  p2 <- data %>%
+    filter(Lap == laps) %>%
+    filter(Distance >= startdist & Distance <= enddist) %>%
+    ggplot(aes(x = Distance)) +
+    geom_line(aes(y = PE3_RPM), color = "#99FFFF", size = 1) +
+    ggtitle("RPM\n") +
+    theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#99FFFF", size = 12))+
+    ## change plot backgroud color
+    theme(plot.background = element_rect(fill = "black", color = "black"))+
+    ## change panel color
+    theme(panel.grid.minor = element_blank(),
+          panel.grid.major = element_line(color = "red", size = 0.1),
+          panel.grid.major.x =element_blank(),
+          panel.background = element_rect(fill = "black", color = "red"))+
+    ## change axises
+    scale_y_continuous(expand = c(0,0), limits = c(0, 16000)) +
+    scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1))) +
+    theme(axis.text.y = element_text(color = "red", size = 10),
+          axis.text.x = element_text(color = "red", size = 10),
+          axis.ticks = element_line(colour = 'red', size = 0.5),
+          axis.ticks.length = unit(.25, "npc"),
+          axis.ticks.x = element_line(colour = "red"),
+          axis.ticks.y = element_blank()) +
+    labs(x = NULL, y = NULL) 
+  
+  grid.arrange(p1,p2)
+  
+}
 RPM_speed(lap1)
 
 ## lapspeed
@@ -152,7 +204,7 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
           legend.position = "top")
-  plotly(p)
+  ggplotly(p)
 }
 
 lapspeed(lap1)
