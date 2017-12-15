@@ -23,7 +23,6 @@ cleanSingleLap <- function(file, lapNum = 1) {
 #######################cleanMultiLap Function#####################################
 
 ##files must be in sequential order
-
 cleanMultiLap <- function(file_names) {
   options(warn=-1)
   ## create an empty tibble that will be used to merge all lap data

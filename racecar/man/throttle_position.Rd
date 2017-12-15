@@ -5,7 +5,7 @@
 Plot the throttle position of the car around the racetrack by lap
 }
 \description{
-This function will create a heat style map of the track based on the throttle position throughout the lap. If the lap argument is greater than 1, there will be one plot generated for each lap.
+This function will create a heat style map of the track based on the throttle position throughout the lap. If the lap vector length is greater than 1, there will be one plot generated for each lap.
 }
 \usage{
 throttle_position(lap_data, 1, 1, 4)
@@ -14,7 +14,7 @@ throttle_position(lap_data, 2)
 
 \arguments{
   \item{data}{a dataframe that has been output from cleanSingleLap or cleanMultiLap}
-  \item{laps}{the number of laps that you would like to look at}
+  \item{laps}{a vector containing all lap numbers that you would like to look at plots for}
   \item{startdist}{the inital position of the track that you would like to look at plots for, the default is the beginning of the track}
   \item{enddist}{the ending position of the track the you would like to look at plots for, the default is the ending of the track}
 }
