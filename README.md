@@ -16,6 +16,7 @@ BLAIN:
 FUYU: 
 - helped write the clean data functions
 - added aesthetics to all functions
+- wrote RPM map, RPM_speed, and RPM_gear function
 
 JESS: 
 - helped write the clean data functions 
