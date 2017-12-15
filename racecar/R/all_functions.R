@@ -124,7 +124,7 @@ throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , e
 ##########################Graph that compares lap speed#####################
 lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
   p <- data %>%
-    filter(Lap == laps) %>%
+    filter(Lap %in% laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance, y = Lap)) +
     geom_point(aes(color = GPS_Speed), size = 8, pch = 15) +
@@ -152,7 +152,7 @@ lapspeed(lap1)
 
 ################### graphs that compare RPM in different gears ######################
 RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
-  data %>%
+  p <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     mutate(gear_floor = floor(Calculated_Gea)) %>%
@@ -160,7 +160,7 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
     ggplot(aes(colour = PE3_TPS)) +
     scale_colour_gradientn(colours=rainbow(4))+
     geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 1)+
-    facet_wrap(~gear_floor) +
+    facet_wrap(~gear_floor, scales = "free_y", ncol = 2) +
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
@@ -179,6 +179,8 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
     ## change the strip color
     theme(strip.background = element_rect(fill = "#333333", color = "red"),
           strip.text = element_text(color = "red"))
+  ggplotly(p)
+  
 }
 
 ################### graphs that compare RPM and speed ######################
@@ -197,24 +199,21 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
           panel.grid.major.x =element_blank(),
           panel.background = element_rect(fill = "black", color = "red"))+
     scale_y_continuous(expand = c(0,0), limits = c(0, 100)) +
-    scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1)))+
+    #scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1)))+
     theme(axis.text.y = element_text(color = "red", size = 10),
           axis.text.x = element_text(color = "red", size = 10),
           axis.ticks = element_line(colour = 'red', size = 0.5),
-          axis.ticks.length = unit(.25, "npc"),
-          axis.ticks.x = element_line(colour = "red"),
+          axis.ticks.length = unit(.1, "npc"),
+          axis.ticks.x = element_blank(),
           axis.ticks.y = element_blank())+
-    ggtitle("GPS_Speed\n") +
-    labs(x = NULL, y = NULL) +
-    theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#FFFF33", size = 12))
+    labs(x = NULL, y = NULL) 
   
   p2 <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance)) +
     geom_line(aes(y = PE3_RPM), color = "#99FFFF", size = 1) +
-    ggtitle("RPM\n") +
-    theme(plot.title = element_text(hjust = - 0.2, vjust = 2.12, colour = "#99FFFF", size = 12))+
+    
     ## change plot backgroud color
     theme(plot.background = element_rect(fill = "black", color = "black"))+
     ## change panel color
@@ -224,17 +223,18 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
           panel.background = element_rect(fill = "black", color = "red"))+
     ## change axises
     scale_y_continuous(expand = c(0,0), limits = c(0, 16000)) +
-    scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1))) +
+    #scale_x_continuous(breaks = c(0, seq(startdist, enddist, 1))) +
     theme(axis.text.y = element_text(color = "red", size = 10),
           axis.text.x = element_text(color = "red", size = 10),
           axis.ticks = element_line(colour = 'red', size = 0.5),
-          axis.ticks.length = unit(.25, "npc"),
-          axis.ticks.x = element_line(colour = "red"),
+          axis.ticks.length = unit(.1, "npc"),
+          axis.ticks.x = element_blank(),
           axis.ticks.y = element_blank()) +
     labs(x = NULL, y = NULL) 
   
-  grid.arrange(p1,p2)
-
+  subplot(p1,plotly_empty(),p2, shareX = TRUE, nrows = 2 )%>% 
+    layout(margin = list(l = 100))
+  
 }
 
 
