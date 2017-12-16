@@ -2,6 +2,11 @@ USE OF THE PACKAGE: This package is designed to be used by those interested in p
 
 CREATING THE PACKAGE: In creating this package, our group first wrote a set of functions that manipulated and plotted data from racestudio2 output. We used a textbook "Making Sense of Squiggly Lines: The Basic Analysis of Race Car Data Acquisition" to help determine which graphs would be the most useful for individuals working with racecar data. After determining the most useful functions, we organized all of our functions into one R file and used RStudio to help design the file structure for our package. We decided to use a single file format because it seemed simpler to have all of our functions stored in one file.
 
+Package Installing instruction: 
+1. Download our repository https://github.com/PHP2560-Statistical-Programming-R/r-package-racecar/tree/master/racecar%20files
+2. run the code: 
+"install.package("racecar", type = "source", repos = NULL) "
+
 
 INDIVIDUAL ROLES:
 
