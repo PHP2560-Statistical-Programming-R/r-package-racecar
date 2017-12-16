@@ -18,7 +18,7 @@ airfuel(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Dist
   \item{enddist}{the ending position of the track the you would like to look at plots for, the default is the ending of the track}
 }
 
-}
+
 \value{
 A scatter plot is created.
 }
@@ -28,7 +28,7 @@ Blain Morin
 }
 
 
-}
+
 \examples{
 airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%

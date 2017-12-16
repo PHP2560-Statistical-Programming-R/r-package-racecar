@@ -18,7 +18,7 @@ mapspeed(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Dis
   \item{enddist}{the ending position of the track the you would like to look at plots for, the default is the ending of the track}
 %%     ~~Describe \code{x} here~~
 }
-}
+
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }

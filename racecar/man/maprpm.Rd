@@ -18,7 +18,7 @@
   \item{enddist}{the ending position of the track the you would like to look at plots for, the default is the ending of the track}
 %%     ~~Describe \code{x} here~~
 }
-}
+
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
@@ -63,6 +63,6 @@ maprpm <- function(data, laps = 1, startdist = min(data$Distance) , enddist = ma
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ RPM }% use one of  RShowDoc("KEYWORDS")
-\keyword{ race }% __ONLY ONE__ keyword per line
-\keyword{ Lap }
+\keyword{ race }
+\keyword{ lap }
+\keyword{ rpm }
