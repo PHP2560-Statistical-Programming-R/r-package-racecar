@@ -1,4 +1,4 @@
-library(dplyr)
+
 #######################cleanSingleLap Function#####################################
 cleanSingleLap <- function(file, lapNum = 1) {
   ### read data into R
@@ -159,7 +159,7 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
     ggplot(aes(colour = PE3_TPS)) +
     scale_colour_gradientn(colours=rainbow(4))+
     geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 1)+
-    facet_wrap(~gear_floor, scales = "free_y", ncol = 2) +
+    facet_wrap(~gear_floor, scales = "free_y") +
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
