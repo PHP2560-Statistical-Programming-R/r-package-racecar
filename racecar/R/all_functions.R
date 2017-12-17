@@ -274,9 +274,15 @@ maprpm <- function(data, laps = 1, startdist = min(data$Distance) , enddist = ma
 
 mapspeed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%
+    
+    ###only look at the specified laps
     filter(Lap == laps) %>%
+    
+    ###only look at the specified distance range 
     filter(Distance >= startdist) %>%
     filter(Distance <= enddist) %>%
+    
+    ###create the ggplot
     ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
     geom_point(aes(color = GPS_Speed), size = 3) + facet_wrap(~Lap) +
     
@@ -309,9 +315,15 @@ mapspeed <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
 
 airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)) {
   data %>%
+    
+    ###only look at specified laps
     filter(Lap == laps) %>%
+    
+    ###only look at specified ditance range
     filter(Distance >= startdist) %>%
     filter(Distance <= enddist) %>%
+    
+    ###create the ggplot
     ggplot(aes( x = PE3_RPM , y = PE3_LAMBDA)) + 
     geom_point(color = "#FFFF33", size = 3) + 
     geom_smooth(method = "lm", se = FALSE) +
@@ -343,10 +355,18 @@ airfuel <- function(data, laps = 1, startdist = min(data$Distance) , enddist = m
 
 oilpressure <- function(data, laps = 1, startdist = min(data$Distance) , enddist = max(data$Distance)){
   data %>%
+    
+    ###only look at specified laps
     filter(Lap == laps) %>%
+    
+    ###only look at specified distance range
     filter(Distance >= startdist) %>%
     filter(Distance <= enddist) %>%
+    
+    ###remove the space in the oil pressure column
     rename(oilpress = "Oil Pressure_Cal") %>%
+    
+    ###create the ggplot
     ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) + 
     geom_point(aes(color = oilpress), size = 3) +
     facet_wrap(~Lap) +
