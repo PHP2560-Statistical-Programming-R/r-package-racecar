@@ -154,12 +154,17 @@ RPM_gear <- function(data, laps = 1, startdist = min(data$Distance) , enddist = 
   p <- data %>%
     filter(Lap == laps) %>%
     filter(Distance >= startdist & Distance <= enddist) %>%
+    
+    ## floor Calculated_gear to integer in order to group
     mutate(gear_floor = floor(Calculated_Gea)) %>%
     group_by(gear_floor) %>%
     ggplot(aes(colour = PE3_TPS)) +
     scale_colour_gradientn(colours=rainbow(4))+
     geom_point(aes(x = GPS_Speed, y = PE3_RPM), size = 1)+
+    
+    ## seperate plot by floored gear
     facet_wrap(~gear_floor, scales = "free_y") +
+    
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
@@ -231,6 +236,7 @@ RPM_speed <- function(data, laps = 1, startdist = min(data$Distance), enddist = 
           axis.ticks.y = element_blank()) +
     labs(x = NULL, y = NULL) 
   
+  ## merge the two graphs
   subplot(p1,plotly_empty(),p2, shareX = TRUE, nrows = 2 )%>% 
     layout(margin = list(l = 100))
   
