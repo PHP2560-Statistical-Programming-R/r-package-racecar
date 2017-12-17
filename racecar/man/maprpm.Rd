@@ -23,7 +23,7 @@
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-A plot that is a map of the track is generated.
+A plot that is a map of the RPM trace is generated.
 Multiple plots will be generated if you are looking at more than more lap
 %%  ~Describe the value returned
 %%  If it is a LIST, use
