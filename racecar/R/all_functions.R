@@ -81,7 +81,7 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
-          legend.position = "top",
+          #legend.position = "top",
           legend.key = element_rect(fill = "black", color = "black"))+
   
     ## change the strip color (if facet wrap)
@@ -127,7 +127,7 @@ throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , e
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
-          legend.position = "top",
+          #legend.position = "top",
           legend.key = element_rect(fill = "black", color = "black"))+
     ## add title of plot and label of axises
     ggtitle("Map of Throttle Position") + 
@@ -172,7 +172,7 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
-          legend.position = "top",
+          #legend.position = "top",
           legend.key = element_rect(fill = "black", color = "black"))
 
 }
