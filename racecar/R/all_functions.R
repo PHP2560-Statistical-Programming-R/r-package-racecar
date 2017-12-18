@@ -57,9 +57,7 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
     
     ## change color scale
     scale_colour_gradientn(colours = heat.colors(4), 
-                           guide = guide_legend(title = "BPS_Front / psi",
-                                                lable.position = "top",
-                                                override.aes = list(size=3,linetype=0)))+
+                           guide = guide_legend(title = "BPS_Front / psi"))+
     
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
