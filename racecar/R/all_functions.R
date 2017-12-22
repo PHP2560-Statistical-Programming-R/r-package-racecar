@@ -69,13 +69,12 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
           axis.line = element_line(colour = "red"),
           axis.ticks = element_blank()) +
     ## change legend color
-    
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
           legend.position = "top") +
     ## add title of plot and label of axises
-    ggtitle("Map of Braking Pattern") + 
+    ggtitle("Braking Map") + 
     theme(plot.title = element_text(color = "red",family = "Trebuchet MS",
                                     face="bold",size=22, hjust=0))+
     labs(x = NULL, y = NULL) +
@@ -102,34 +101,30 @@ throttle_position <- function(data, laps = 1, startdist = min(data$Distance) , e
     geom_point(aes(color = PE3_TPS), size = 3) +
     
     ## change color scale (n is the number of color in the palette)
-    scale_colour_gradientn(colours = heat.colors(4), 
-                           guide = guide_legend(title = "% of full throttle",
-                                                lable.position = "top",
-                                                override.aes = list(size=3,linetype=0)))+
+    scale_colour_gradientn(colours = heat.colors(4),
+                           name = "% of full throttle")+
     
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.background = element_rect(fill = 'black', colour = 'red')) +
-    
     ## change axises color
     theme(axis.text.y = element_blank(),
           axis.text.x = element_blank(),
           axis.line = element_line(colour = "red"),
           axis.ticks = element_blank()) +
-    ## change legend color and position
+    ## change legend color
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
-          #legend.position = "top",
-          legend.key = element_rect(fill = "black", color = "black"))+
+          legend.position = "top") +
     ## add title of plot and label of axises
     ggtitle("Map of Throttle Position") + 
     theme(plot.title = element_text(color = "red",family = "Trebuchet MS",
                                     face="bold",size=22, hjust=0))+
     labs(x = NULL, y = NULL) +
-    ## change the strip color (if facet wrap)
+    ## change the strip color
     theme(strip.background = element_rect(fill = "#333333", color = "red"),
           strip.text = element_text(color = "red"))
 }
@@ -141,22 +136,25 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
     filter(Distance >= startdist & Distance <= enddist) %>%
     ggplot(aes(x = Distance, y = Lap)) +
     geom_point(aes(color = GPS_Speed), size = 8, pch = 15) +
-    scale_colour_gradientn(colours=heat.colors(4)) +
+    
+    ## set the ticks of y axis
+    scale_y_continuous(breaks= c(1, seq(1,length(laps),1))) +
+    
+    ## change the color scale
+    scale_colour_gradientn(colours=heat.colors(4),
+                           name = "Speed / mph") +
+    
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.background = element_rect(fill = 'black', colour = 'red')) +
+
     ## add title of plot and label of axises
-    ggtitle("Graph of Lap Speed") +
-    labs(x = "Distance / km", y = "lap") +
+    labs(title = "Graph of Lap Speed", x = "Distance (km)", y = "lap") +
     theme(plot.title = element_text(color = "red",family = "Trebuchet MS",
                                     face="bold",size=22, hjust=0))+
-    ## change the legend
-    scale_colour_gradientn(colours = heat.colors(4), 
-                           guide = guide_legend(title = "GPS Speed / mph",
-                                                lable.position = "top",
-                                                override.aes = list(size=3,linetype=0)))+
+ 
     ## change axises color
     theme(axis.text.y = element_text(size = 10, colour = 'red'),
           axis.text.x = element_text(size = 10, colour = 'red'),
@@ -166,10 +164,8 @@ lapspeed <- function(data,laps = 1, startdist = min(data$Distance) , enddist = m
     ## change legend color and position
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
-          legend.title = element_text(color = "red"),
-          #legend.position = "top",
-          legend.key = element_rect(fill = "black", color = "black"))
-
+          legend.title = element_text(color = "red"))
+    
 }
 
 
