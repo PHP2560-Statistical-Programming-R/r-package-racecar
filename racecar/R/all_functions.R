@@ -49,15 +49,14 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
     
     ## plot the map of the track
     ggplot(aes( x = GPS_Latitude, y = GPS_Longitude)) +
-    
+
     facet_wrap(~Lap) +
-    
     ##add color based on value of BPS_front - indicating the brake pressure
     geom_point(aes(color = BPS_Front), size = 3) +
     
     ## change color scale
-    scale_colour_gradientn(colours = heat.colors(4), 
-                           guide = guide_legend(title = "BPS_Front / psi"))+
+    scale_colour_gradientn(colours = heat.colors(4),
+                           guide_legend(title="BPS_Front / psi"))+
     
     ## change the theme color
     theme(plot.background = element_rect(fill = 'black', colour = 'red'),
@@ -69,20 +68,18 @@ braking_pattern <- function(data, laps = 1, startdist = min(data$Distance) , end
           axis.text.x = element_blank(),
           axis.line = element_line(colour = "red"),
           axis.ticks = element_blank()) +
+    ## change legend color
     
-    ## add title of plot and label of axises
-    ggtitle("Map of Braking pattern") + 
-    theme(plot.title = element_text(color = "red",family = "Trebuchet MS",
-                                    face="bold",size=22, hjust=0))+
-    
-    ## change legend color and position
     theme(legend.background = element_rect(fill = "black", color = "black"),
           legend.text = element_text(color = "red"),
           legend.title = element_text(color = "red"),
-          #legend.position = "top",
-          legend.key = element_rect(fill = "black", color = "black"))+
-  
-    ## change the strip color (if facet wrap)
+          legend.position = "top") +
+    ## add title of plot and label of axises
+    ggtitle("Map of Braking Pattern") + 
+    theme(plot.title = element_text(color = "red",family = "Trebuchet MS",
+                                    face="bold",size=22, hjust=0))+
+    labs(x = NULL, y = NULL) +
+    ## change the strip color
     theme(strip.background = element_rect(fill = "#333333", color = "red"),
           strip.text = element_text(color = "red"))
 }
